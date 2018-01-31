@@ -1,0 +1,25 @@
+{
+  "name": "mapbox-app-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FarrisIsmati/mapbox-app-node.git"
+  },
+  "author": "Farris <farris.ismati@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FarrisIsmati/mapbox-app-node/issues"
+  },
+  "homepage": "https://github.com/FarrisIsmati/mapbox-app-node#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "mongoose": "^5.0.2"
+  }
+}
