@@ -20,6 +20,14 @@ const playerSchema = new Schema({
     type: String,
     required: false
   },
+  'ip': {
+    type: String,
+    required: true
+  },
+  'active': {
+    type: Boolean,
+    required: true
+  },
   'date': {
     type: Date,
     default: Date.now
@@ -30,6 +38,14 @@ const hostSchema = new mongoose.Schema({
   'name': {
     type: String,
     set: defaultNameGenerator,
+    required: true
+  },
+  'ip': {
+    type: String,
+    required: true
+  },
+  'active': {
+    type: Boolean,
     required: true
   },
   'date': {
