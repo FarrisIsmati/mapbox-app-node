@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const playerSchema = new Schema({
   'name': {
     type: String,
-    required: true
+    required: false
   },
   'guess': {
     type: String,
@@ -27,7 +27,7 @@ const playerSchema = new Schema({
 const hostSchema = new mongoose.Schema({
   'name': {
     type: String,
-    required: true
+    required: false
   },
   'ip': {
     type: String,

@@ -27,9 +27,9 @@ const gameSchema = new mongoose.Schema({
   },
   'host': {
     type: hostSchema,
-    required: true
+    required: false
   },
-  'user': {
+  'player': {
     type: playerSchema,
     required: false
   },
