@@ -46,7 +46,7 @@ const gameSchema = new mongoose.Schema({
     type: Boolean,
     required: true
   },
-  'location': {
+  'coordinates': {
     type: String,
     required: false
   },

@@ -46,4 +46,25 @@ dataRouter.post('/', (req, res) => {
     })
 })
 
+//Update Radius
+dataRouter.put('/radius/:id', (req, res) => {
+  Game.update(
+    { _id: req.params.id },
+    { $set: { 'radius' : req.body.radius } }
+  ).then(data => {
+    res.json(data)
+  })
+})
+
+//Update coordinates
+dataRouter.put('/coordinates/:id', (req, res) => {
+  Game.update(
+    { _id: req.params.id },
+    { $set: { 'coordinates' : req.body.coordinates } }
+  ).then(data => {
+    res.json(data)
+  })
+})
+
+
 module.exports = dataRouter
