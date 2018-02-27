@@ -46,6 +46,18 @@ dataRouter.post('/', (req, res) => {
     })
 })
 
+//Update Player Name
+dataRouter.put('/name/:id', (req, res) => {
+  //The update name of either a host or player
+  const playerType = req.body.host ? 'host' : 'player'
+  Game.update(
+    { _id: req.params.id },
+    { $set: { [playerType + '.name'] : req.body.name } }
+  ).then(data => {
+    res.json(data)
+  })
+})
+
 //Update Radius
 dataRouter.put('/radius/:id', (req, res) => {
   Game.update(
@@ -61,6 +73,28 @@ dataRouter.put('/coordinates/:id', (req, res) => {
   Game.update(
     { _id: req.params.id },
     { $set: { 'coordinates' : req.body.coordinates } }
+  ).then(data => {
+    res.json(data)
+  })
+})
+
+//Update active state
+dataRouter.put('/active/:id', (req, res) => {
+  Game.update(
+    { _id: req.params.id },
+    { $set: { 'active' : req.body.active } }
+  ).then(data => {
+    res.json(data)
+  })
+})
+
+//Update active handler
+dataRouter.put('/activeHandler/:id', (req, res) => {
+  //The update active handler request is either a host or player
+  const playerType = req.body.host ? 'host' : 'player'
+  Game.update(
+    { _id: req.params.id },
+    { $set: { [playerType + '.active'] : req.body.active } }
   ).then(data => {
     res.json(data)
   })
