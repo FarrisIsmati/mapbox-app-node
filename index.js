@@ -2,7 +2,11 @@
 const express         = require('express')
 const parser          = require('body-parser')
 const cors            = require('cors')
+const socketIO        = require('socket.io')
+const http            = require('http')
 const app             = express()
+const server          = require('http').createServer(app)
+const io              = socketIO(server)
 
 //SCHEMAS
 const mongoose        = require('./db/gameSchema.js')
@@ -18,6 +22,14 @@ app.use(cors())
 
 app.use('/game', dataRoutes)
 
-app.listen(app.get('port'), () => {
+io.on('connection', socket => {
+  console.log('New client connected')
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
+})
+
+server.listen(app.get('port'), () => {
   console.log('You are flying on ' + app.get('port'))
 })

@@ -33,6 +33,10 @@ const gameSchema = new mongoose.Schema({
     type: playerSchema,
     required: false
   },
+  'guesses': {
+    type: Number,
+    required: false
+  },
   'gameLog': {
     type: [gameLogSchema],
     index: true,
