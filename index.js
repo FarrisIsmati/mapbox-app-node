@@ -25,6 +25,11 @@ app.use('/game', dataRoutes)
 io.on('connection', socket => {
   console.log('New client connected')
 
+  socket.on('send chat', (payload) => {
+    console.log('Player Name: ' + payload.playerName + " | Content: " + payload.content)
+    io.sockets.emit('send chat', payload)
+  })
+
   socket.on('disconnect', () => {
     console.log('user disconnected')
   })
