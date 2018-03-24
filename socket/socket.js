@@ -9,15 +9,22 @@ const Game          = mongoose.model('Game')
 module.exports = (socket, io) => {
   console.log('New client connected')
 
-  socket.on('send chat', (payload) => {
-    // Game.update(
-    //   { _id: req.params.id },
-    //   { $set: { [playerType + '.name'] : req.body.name } }
-    // ).then(data => {
-    //   res.json(data)
-    // })
-    console.log('Player Name: ' + payload.playerName + " | Content: " + payload.content + " | ID: " + payload.gameId)
-    io.sockets.emit('send chat', payload)
+  socket.on('send chat', payload => {
+    Game.update(
+      { _id: payload.gameId },
+      { $push: {
+          gameLog : {
+            playerName: payload.playerName,
+            content: payload.content
+          }
+        }
+      }
+    ).then(data => {
+      io.sockets.emit('send chat', payload)
+    })
+    .catch(err => {
+      console.log(err)
+    })
   })
 
   socket.on('disconnect', () => {
