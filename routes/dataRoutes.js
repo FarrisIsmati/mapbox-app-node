@@ -100,5 +100,20 @@ dataRouter.put('/activeHandler/:id', (req, res) => {
   })
 })
 
+//Change total guesses left
+dataRouter.put('/guesses/:id', (req, res) => {
+  //Only update backend if host send the request (Otherwise it updates twice)
+  if (req.body.host){
+    Game.update(
+      { _id: req.params.id },
+      { $inc: { guesses : req.body.amount } }
+    ).then(data => {
+      res.json(data)
+    })
+  } else {
+    res.status(200).send('Success 1')
+  }
+})
+
 
 module.exports = dataRouter
