@@ -5,10 +5,6 @@ const hostSchema      = require('./userSchemas').hostSchema
 const schema = mongoose.Schema
 
 const gameLogSchema = new mongoose.Schema({
-  // 'playerId': {
-  //   type: String,
-  //   required: true
-  // },
   'playerName': {
     type: String,
     required: true

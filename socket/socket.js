@@ -27,6 +27,10 @@ module.exports = (socket, io) => {
     })
   })
 
+  socket.on('player connect', playerName => {
+    io.sockets.emit('player connect', playerName)
+  })
+
   socket.on('disconnect', () => {
     console.log('user disconnected')
   })
