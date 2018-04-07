@@ -16,11 +16,15 @@ const playerSchema = new Schema({
   },
   'active': {
     type: Boolean,
-    required: true
+    required: false
   },
   'date': {
     type: Date,
     default: Date.now
+  },
+  'connected': {
+    type: Boolean,
+    required: false
   }
 })
 
@@ -35,11 +39,15 @@ const hostSchema = new mongoose.Schema({
   },
   'active': {
     type: Boolean,
-    required: true
+    required: false
   },
   'date': {
     type: Date,
     default: Date.now
+  },
+  'connected': {
+    type: Boolean,
+    required: false
   }
 })
 

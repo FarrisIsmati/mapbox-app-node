@@ -9,6 +9,10 @@ const Game          = mongoose.model('Game')
 module.exports = (socket, io) => {
   console.log('New client connected')
 
+  socket.on('recieve client', data => {
+    socket.playerName = data.player.name
+  })
+
   socket.on('send chat', payload => {
     Game.update(
       { _id: payload.gameId },
@@ -31,7 +35,12 @@ module.exports = (socket, io) => {
     io.sockets.emit('player connect', playerName)
   })
 
+  socket.on('update marker coordinates', coordinates => {
+    io.sockets.emit('update marker coordinates', coordinates)
+  })
+
   socket.on('disconnect', () => {
     console.log('user disconnected')
+    io.sockets.emit('player disconnect', socket.playerName)
   })
 }
