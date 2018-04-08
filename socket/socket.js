@@ -8,8 +8,10 @@ const Game          = mongoose.model('Game')
 
 module.exports = (socket, io) => {
   console.log('New client connected')
+  socket.recievedClient = false
 
   socket.on('recieve client', data => {
+    socket.recievedClient = true
     socket.gameId = data.game.id
     socket.playerName = data.player.name
     socket.playerHost = data.player.host
@@ -62,24 +64,28 @@ module.exports = (socket, io) => {
 
   socket.on('disconnect', () => {
     console.log('user disconnected')
-    socket.playerHost ?
-      Game.update(
-        { _id: socket.gameId },
-        { $set: { "host.connected": false, "host.active": false } }
-      ).then(data => {
-        io.sockets.emit('player disconnect', socket.playerName)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    : Game.update(
-        { _id: socket.gameId },
-        { $set: { "player.connected": false} }
-      ).then(data => {
-        io.sockets.emit('player disconnect', socket.playerName)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    //If you recieved the client which means the game wasn't full
+    //Prevents disconnect message from a third party trying to join
+    if (socket.recievedClient) {
+      socket.playerHost ?
+        Game.update(
+          { _id: socket.gameId },
+          { $set: { 'host.connected': false, 'active': false } }
+        ).then(data => {
+          io.sockets.emit('player disconnect', socket.playerName)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      : Game.update(
+          { _id: socket.gameId },
+          { $set: { 'player.connected': false, 'active': false } }
+        ).then(data => {
+          io.sockets.emit('player disconnect', socket.playerName)
+        })
+        .catch(err => [
+          console.log(err)
+        ])
+    }
   })
 }
