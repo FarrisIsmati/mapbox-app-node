@@ -10,7 +10,28 @@ module.exports = (socket, io) => {
   console.log('New client connected')
 
   socket.on('recieve client', data => {
+    socket.gameId = data.game.id
     socket.playerName = data.player.name
+    socket.playerHost = data.player.host
+    socket.playerHost ?
+      Game.update(
+        { _id: socket.gameId },
+        { $set: { "host.connected": true } }
+      ).then(data => {
+        console.log(data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    : Game.update(
+        { _id: socket.gameId },
+        { $set: { "player.connected": true} }
+      ).then(data => {
+        console.log(data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   })
 
   socket.on('send chat', payload => {
@@ -41,6 +62,24 @@ module.exports = (socket, io) => {
 
   socket.on('disconnect', () => {
     console.log('user disconnected')
-    io.sockets.emit('player disconnect', socket.playerName)
+    socket.playerHost ?
+      Game.update(
+        { _id: socket.gameId },
+        { $set: { "host.connected": false, "host.active": false } }
+      ).then(data => {
+        io.sockets.emit('player disconnect', socket.playerName)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    : Game.update(
+        { _id: socket.gameId },
+        { $set: { "player.connected": false} }
+      ).then(data => {
+        io.sockets.emit('player disconnect', socket.playerName)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   })
 }
