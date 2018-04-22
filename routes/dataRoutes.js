@@ -27,7 +27,7 @@ dataRouter.post('/', (req, res) => {
   let ip = (req.headers['x-forwarded-for'] ||
      req.connection.remoteAddress ||
      req.socket.remoteAddress ||
-     req.connection.socket.remoteAddress).split(",")[0];
+     req.connection.socket.remoteAddress).split(',')[0];
 
   //Check future to make sure ip works
   if (req.body.host) {
@@ -95,6 +95,16 @@ dataRouter.put('/activeHandler/:id', (req, res) => {
   Game.update(
     { _id: req.params.id },
     { $set: { [playerType + '.active'] : req.body.active } }
+  ).then(data => {
+    res.json(data)
+  })
+})
+
+//Update game completed
+dataRouter.put('/completed/:id', (req, res) => {
+  Game.update(
+    { _id: req.params.id },
+    { $set: { completed : req.body.completed } }
   ).then(data => {
     res.json(data)
   })
