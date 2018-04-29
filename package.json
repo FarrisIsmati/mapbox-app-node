@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/FarrisIsmati/mapbox-app-node#readme",
   "dependencies": {
+    "@turf/turf": "^5.1.6",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "mongoose": "^5.0.2",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.0.4",
+    "turf": "^3.0.14"
   }
 }

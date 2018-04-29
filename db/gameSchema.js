@@ -54,6 +54,10 @@ const gameSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  'radiusMetaData': {
+    type: Array,
+    required: false
+  },
   'date': {
     type: Date,
     default: Date.now

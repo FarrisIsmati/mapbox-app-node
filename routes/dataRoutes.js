@@ -1,5 +1,6 @@
 //DEPENDENCIES
 const dataRouter    = require('express').Router()
+const turf          = require('turf')
 
 //SCHEMAS
 const mongoose      = require('../db/gameSchema.js')
@@ -65,6 +66,29 @@ dataRouter.put('/radius/:id', (req, res) => {
     { $set: { 'radius' : req.body.radius } }
   ).then(data => {
     res.json(data)
+  })
+})
+
+//Update Radius Meta Data
+dataRouter.put('/radiusMetaData/:id', (req, res) => {
+  Game.update(
+    { _id: req.params.id },
+    { $set: { 'radiusMetaData' : req.body.radiusMetaData } }
+  ).then(data => {
+    res.json(data)
+  })
+})
+
+//Check if current radius guess is within the set radius circle
+dataRouter.get('/checkRadiusMetaData/:id/:lat/:long', (req, res) => {
+  Game.findOne({_id: req.params.id})
+  .then((game)=> {
+    const pt = turf.point([req.params.lat,req.params.long]);
+    const poly = turf.polygon([game.radiusMetaData]);
+    res.status(200).json(turf.inside(pt, poly))
+  })
+  .catch((err) => {
+    console.log(err)
   })
 })
 
