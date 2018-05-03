@@ -54,6 +54,35 @@ module.exports = (socket, io) => {
     })
   })
 
+  socket.on('send message', payload => {
+    Game.update(
+      { _id: payload.gameId },
+      { $push: {
+          gameLog : {
+            content: payload.content
+          }
+        }
+      }
+    ).then(data => {
+      io.sockets.emit('send message', payload)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  })
+
+  socket.on('reduce guess', payload => {
+    Game.update(
+      { _id: payload.gameId },
+      { $inc: { guesses : -1 } }
+    ).then(data => {
+      io.sockets.emit('reduce guess', payload)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  })
+
   socket.on('player connect', playerName => {
     io.sockets.emit('player connect', playerName)
   })
