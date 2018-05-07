@@ -22,9 +22,12 @@ dataRouter.get('/:id', (req,res)=> {
   })
 })
 
+dataRouter.get('/', (req,res) => {
+  res.status(200).json({val: 'This works atleast'})
+})
+
 //Create Game
 dataRouter.post('/', (req, res) => {
-  console.log('hit')
   let gameData = {...req.body}
   let ip = (req.headers['x-forwarded-for'] ||
      req.connection.remoteAddress ||
