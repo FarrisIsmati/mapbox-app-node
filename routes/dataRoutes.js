@@ -28,20 +28,7 @@ dataRouter.get('/', (req,res) => {
 
 //Create Game
 dataRouter.post('/', (req, res) => {
-  let gameData = {...req.body}
-  let ip = (req.headers['x-forwarded-for'] ||
-     req.connection.remoteAddress ||
-     req.socket.remoteAddress ||
-     req.connection.socket.remoteAddress).split(',')[0];
-
-  //Check future to make sure ip works
-  if (req.body.host) {
-    gameData.host.ip = ip
-  } else {
-    gameData.player.ip = ip
-  }
-
-  let newGame = new Game(gameData)
+  let newGame = new Game(req.body)
   newGame.save()
     .then((data) => {
       res.status(200).json(data)

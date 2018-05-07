@@ -10,10 +10,6 @@ const playerSchema = new Schema({
     type: String,
     required: false
   },
-  'ip': {
-    type: String,
-    required: true
-  },
   'active': {
     type: Boolean,
     required: false
@@ -32,10 +28,6 @@ const hostSchema = new mongoose.Schema({
   'name': {
     type: String,
     required: false
-  },
-  'ip': {
-    type: String,
-    required: true
   },
   'active': {
     type: Boolean,
