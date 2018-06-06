@@ -26,6 +26,6 @@ app.use(cors())
 app.use('/game', dataRoutes)
 io.on('connection', data => socket(data, io))
 
-server.listen(app.get('port'), () => {
+server.listen(app.get('port'), '0.0.0.0', () => {
   console.log('You are flying on ' + app.get('port'))
 })
